@@ -43,5 +43,25 @@ namespace TodoListExample.Services
 
             return todoList;
         }
+
+        public string AddTodo(TodoModel model)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(TodoDBConnectionString))
+                {
+                    string sql = @" INSERT INTO Todos(TodoID, TodoContent, TodoStatus)
+	                                VALUES (@todoid, @todocontent, @todostatus);";
+
+                    conn.Execute(sql, model);
+                }
+                return model.TodoID;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return string.Empty;
+        }
     }
 }

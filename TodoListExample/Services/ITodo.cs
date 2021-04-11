@@ -6,5 +6,6 @@ namespace TodoListExample.Services
     public interface ITodo
     {
         public List<TodoModel> GetTodoList();
+        public string AddTodo(TodoModel model);
     }
 }
