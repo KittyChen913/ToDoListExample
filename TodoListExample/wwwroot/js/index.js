@@ -14,3 +14,20 @@
     }
   });
 })();
+
+function add() {
+  var todoContent = $('#todoText').val();
+  $.ajax({
+    method: 'POST',
+    url: '/api/Todo',
+    data: JSON.stringify(todoContent),
+    dataType: 'json',
+    contentType: 'application/json'
+  }).done(function (data) {
+    var cloneItem = $('#ItemTemplate').clone();
+    cloneItem.attr("id", data);
+    cloneItem.removeAttr('hidden');
+    cloneItem.find("label#ItemContent").text(todoContent);
+    $('#ItemList').append(cloneItem);
+  });
+}
