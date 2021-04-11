@@ -1,7 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "TodoList";
 }
+<script src="~/js/index.js"></script>
 
-<div class="text-center">
-    
+<div class="container">
+    <div id="ItemList"></div>
+</div>
+
+<div class="row" id="ItemTemplate" hidden>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" aria-label="todoItem">
+            </div>
+        </div>
+        <label id="ItemContent" class="form-control" aria-label="todoContent"></label>
+    </div>
 </div>
