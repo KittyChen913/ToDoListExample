@@ -25,6 +25,7 @@ function add() {
     contentType: 'application/json'
   }).done(function (data) {
     addTodoItem(data, todoContent);
+    $('#todoText').val('');
   });
 }
 
