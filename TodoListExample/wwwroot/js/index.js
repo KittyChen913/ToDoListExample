@@ -28,6 +28,18 @@ function add() {
   });
 }
 
+function remove(e) {
+  var todoRow = $(e).closest('.row');
+  $.ajax({
+    method: 'DELETE',
+    url: '/api/Todo' + '/' + todoRow.attr('id')
+  }).done(function (data) {
+    var itemContent = $('#' + data).find("label#ItemContent").text();
+    alert(itemContent + ' 刪除成功!');
+    $(todoRow).remove();
+  });
+}
+
 function addTodoItem(todoID, todoContent) {
   var cloneItem = $('#ItemTemplate').clone();
   cloneItem.attr("id", todoID);
