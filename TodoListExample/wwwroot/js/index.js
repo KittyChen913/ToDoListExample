@@ -41,19 +41,25 @@ function remove(e) {
   });
 }
 
-function update(todoID, todoContent, todoStatus) {
-  var patch = {
-    "TodoID": todoID,
+function update(e) {
+  var todoRow = $(e).closest('.row');
+  var todoId = todoRow.attr('id');
+  var todoContent = $('#' + todoId).find("label#ItemContent").text();
+  var todoStatus = e.checked ? 1 : 0;
+  var params = {
+    "TodoID": todoId,
     "TodoContent": todoContent,
     "TodoStatus": todoStatus
   };
   $.ajax({
     method: 'PUT',
     url: '/api/Todo',
-    data: JSON.stringify(patch),
+    data: JSON.stringify(params),
     dataType: 'json',
     contentType: 'application/json'
   }).done(function (data) {
+    deleteTodoItem(todoRow);
+    addTodoItem(todoId, todoContent, todoStatus);
   });
 }
 
@@ -73,14 +79,4 @@ function addTodoItem(todoID, todoContent, todoStatus) {
 
 function deleteTodoItem(e) {
   $(e).remove();
-}
-
-function changeStatus(e) {
-  var todoRow = $(e).closest('.row');
-  var todoId = todoRow.attr('id');
-  var todoContent = $('#' + todoId).find("label#ItemContent").text();
-  var todoStatus = e.checked ? 1 : 0;
-  update(todoId, todoContent, todoStatus);
-  deleteTodoItem(todoRow);
-  addTodoItem(todoId, todoContent, todoStatus);
 }
