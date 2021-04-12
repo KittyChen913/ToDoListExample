@@ -9,7 +9,7 @@ function initGet() {
   }).done(function (data) {
     if (data.length > 0) {
       for (i = 0; i < data.length; i++) {
-        addTodoItem(data[i].todoID, data[i].todoContent);
+        addTodoItem(data[i].todoID, data[i].todoContent, data[i].todoStatus);
       }
     }
   });
@@ -24,7 +24,7 @@ function add() {
     dataType: 'json',
     contentType: 'application/json'
   }).done(function (data) {
-    addTodoItem(data, todoContent);
+    addTodoItem(data, todoContent, 0);
     $('#todoText').val('');
   });
 }
@@ -37,14 +37,50 @@ function remove(e) {
   }).done(function (data) {
     var itemContent = $('#' + data).find("label#ItemContent").text();
     alert(itemContent + ' 刪除成功!');
-    $(todoRow).remove();
+    deleteTodoItem(todoRow);
   });
 }
 
-function addTodoItem(todoID, todoContent) {
+function update(todoID, todoContent, todoStatus) {
+  var patch = {
+    "TodoID": todoID,
+    "TodoContent": todoContent,
+    "TodoStatus": todoStatus
+  };
+  $.ajax({
+    method: 'PUT',
+    url: '/api/Todo',
+    data: JSON.stringify(patch),
+    dataType: 'json',
+    contentType: 'application/json'
+  }).done(function (data) {
+  });
+}
+
+function addTodoItem(todoID, todoContent, todoStatus) {
   var cloneItem = $('#ItemTemplate').clone();
+  var addLocation = $('#ItemList');
   cloneItem.attr("id", todoID);
+  if (todoStatus == 1) {
+    cloneItem.find("input#todoStatus").prop('checked', true);
+    cloneItem.find("label#ItemContent").css('text-decoration', 'line-through');
+    addLocation = $('#DoneItemList');
+  }
   cloneItem.removeAttr('hidden');
   cloneItem.find("label#ItemContent").text(todoContent);
-  $('#ItemList').append(cloneItem);
+  addLocation.append(cloneItem);
+}
+
+function deleteTodoItem(e) {
+  $(e).remove();
+}
+
+function changeStatus(e) {
+  var todoRow = $(e).closest('.row');
+  var todoId = todoRow.attr('id');
+  var todoContent = $('#' + todoId).find("label#ItemContent").text();
+  var todoStatus = e.checked ? 1 : 0;
+  update(todoId, todoContent, todoStatus);
+  deleteTodoItem(todoRow);
+  addTodoItem(todoId, todoContent, todoStatus);
 }

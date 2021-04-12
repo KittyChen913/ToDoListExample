@@ -14,13 +14,17 @@
     </div>
     <hr size="8px" align="center" width="100%">
     <div id="ItemList"></div>
+    <br />
+    <label>已完成的項目</label>
+    <hr size="8px" align="center" width="100%">
+    <div id="DoneItemList"></div>
 </div>
 
 <div class="row" id="ItemTemplate" hidden>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" aria-label="todoItem">
+                <input id="todoStatus" type="checkbox" aria-label="todoItem" onclick="changeStatus(this)">
             </div>
         </div>
         <label id="ItemContent" class="form-control" aria-label="todoContent"></label>
