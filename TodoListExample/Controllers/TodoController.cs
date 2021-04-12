@@ -37,5 +37,15 @@ namespace TodoListExample.Controllers
             string todoID = _todo.AddTodo(model);
             return todoID;
         }
+        [HttpDelete("{todoId}")]
+        public string Delete(string todoId)
+        {
+            TodoModel model = new TodoModel()
+            {
+                TodoID = todoId
+            };
+            string todoID = _todo.DeleteTodo(model);
+            return todoID;
+        }
     }
 }

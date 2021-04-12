@@ -63,5 +63,25 @@ namespace TodoListExample.Services
             }
             return string.Empty;
         }
+
+        public string DeleteTodo(TodoModel model)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(TodoDBConnectionString))
+                {
+                    string sql = @" DELETE FROM Todos
+	                                WHERE todoid = @todoid;";
+
+                    conn.Execute(sql, model);
+                }
+                return model.TodoID;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return string.Empty;
+        }
     }
 }
