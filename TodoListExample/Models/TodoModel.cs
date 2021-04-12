@@ -15,6 +15,7 @@ namespace TodoListExample.Models
         /// <summary>
         /// 待辦事項項目狀態
         /// </summary>
+        /// <remarks>0: 未完成的項目, 1: 已完成的項目</remarks>
         public int TodoStatus { get; set; }
     }
 }

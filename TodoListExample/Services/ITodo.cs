@@ -8,5 +8,6 @@ namespace TodoListExample.Services
         public List<TodoModel> GetTodoList();
         public string AddTodo(TodoModel model);
         public string DeleteTodo(TodoModel model);
+        public string UpdateTodo(TodoModel model);
     }
 }

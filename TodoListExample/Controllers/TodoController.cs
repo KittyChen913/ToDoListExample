@@ -37,6 +37,14 @@ namespace TodoListExample.Controllers
             string todoID = _todo.AddTodo(model);
             return todoID;
         }
+        
+        [HttpPut]
+        public string Put([FromBody] TodoModel model)
+        {
+           string todoID = _todo.UpdateTodo(model);
+            return todoID; 
+        }
+
         [HttpDelete("{todoId}")]
         public string Delete(string todoId)
         {
