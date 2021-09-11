@@ -17,6 +17,11 @@ function initGet() {
 
 function add() {
     var todoContent = $('#todoText').val();
+    if (removeSpace(todoContent).length == 0) {
+        alert('記事內容不能為空');
+        return;
+    }
+
     $.ajax({
         method: 'POST',
         url: '/api/Todo',
@@ -27,6 +32,10 @@ function add() {
         addTodoItem(data, todoContent, 0);
         $('#todoText').val('');
     });
+}
+
+function removeSpace(str) {
+    return str.replace(/\s/g, "");
 }
 
 function remove(e) {
